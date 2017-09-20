@@ -5,7 +5,7 @@ import {
 } from 'react-native';
 import global from '../global';
 import saveCart from '../../../api/saveCart';
-import getCart from '../../../api/getCart';
+//import getCart from '../../../api/getCart';
 
 function toTitleCase(str) {
     return str.replace(/\w\S*/g, txt => txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase());
@@ -21,10 +21,10 @@ class CartView extends Component {
         };
         global.addProductToCart = this.addProductToCart.bind(this);
     }
-    componentDidMount() {
+    /*componentDidMount() {
         getCart()
         .then(cartArray => this.setState({ cartArray }));
-    }
+    }*/
     addProductToCart(product) {
         this.setState({ cartArray: this.state.cartArray.concat({ product, quanlity: 1 }) },
         () => saveCart(this.state.cartArray)
