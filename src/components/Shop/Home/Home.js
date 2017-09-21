@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 import { ScrollView } from 'react-native';
+import { connect } from 'react-redux';
 import Collection from './Collection';
 import Category from './Category';
 import TopProduct from './TopProduct';
 import Header from './Header';
 import initData from '../../../api/initData';
-
+import saveCart from '../../../api/saveCart';
+import getCart from '../../../api/getCart';
 
 class Home extends Component {
     constructor(props) {
@@ -14,6 +16,7 @@ class Home extends Component {
             types: [],
             topProducts: [],
         };
+        this.addProductToCart.bind(this);
     }
 
     componentDidMount() {
@@ -22,6 +25,12 @@ class Home extends Component {
             const { type, product } = resJSON;
             this.setState({ types: type, topProducts: product });
         });
+        getCart()
+        .then(cartArray => { this.props.cartArray = cartArray; });
+    }
+    addProductToCart() {
+        // this.props.cartArray.concat({ product, quanlity: 1 })
+          saveCart(this.props.cartArray);
     }
 
     render() {
@@ -38,7 +47,13 @@ class Home extends Component {
     }
 }
 
-export default Home;
+function mapStateToProps(state) {
+    return { 
+        Cartarray: state.arrCart
+    };
+}
+
+export default connect(mapStateToProps)(Home);
 
 /*
 

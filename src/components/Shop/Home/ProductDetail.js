@@ -2,24 +2,33 @@ import React, { Component } from 'react';
 import { 
     View, Text, StyleSheet, Image, Dimensions, ScrollView, TouchableOpacity 
 } from 'react-native';
-import global from '../global';
+import { connect } from 'react-redux';
+import { addCart } from '../../redux/action';
+//import global from '../global';
 
 const back = require('../../../media/appIcon/back.png');
 const cart = require('../../../media/appIcon/cartfull.png');
 
-const url = 'http:192.168.0.107/api/images/product/';
+const url = 'http:192.168.0.112/api/images/product/';
 
-export default class ProductDetail extends Component {
+class ProductDetail extends Component {
+    // addThisProductToCart(actionType) {
+    //     const { product } = this.props.navigation.state.product.params;
+    //     global.addProductToCart(product);
+    //     this.props.dispatch({ type: actionType });
+    // }
+
+    onAdd() {
+        const { product } = this.props.navigation.state.params;
+        this.props.addWord(product);
+    }
     goBack() {
         const { navigation } = this.props;
         navigation.goBack();
     }
-    addThisProductToCart() {
-        //const { product } = this.props;
-        const { product } = this.props.navigation.state.product.params;
-        global.addProductToCart(product);
-    }
+
     render() {
+        //const { Cartarray } = this.props;
         const {
             wrapper, cardStyle, header,
             footer, backStyle,
@@ -29,6 +38,7 @@ export default class ProductDetail extends Component {
         } = styles;
         const { name, price, color, material, description, images } 
         = this.props.navigation.state.params.product;
+
         return (
             <View style={wrapper}>
                 <View style={cardStyle}>
@@ -36,7 +46,7 @@ export default class ProductDetail extends Component {
                         <TouchableOpacity onPress={this.goBack.bind(this)}>
                             <Image style={backStyle} source={back} />
                         </TouchableOpacity>
-                        <TouchableOpacity onPress={this.addThisProductToCart.bind(this)}>
+                        <TouchableOpacity onPress={this.onAdd.bind(this)}>
                             <Image style={cartStyle} source={cart} />
                         </TouchableOpacity>
                     </View>
@@ -198,3 +208,10 @@ const styles = StyleSheet.create({
         fontFamily: 'Avenir'
     }
 });
+// function mapStateToProps(state) {
+//     return { 
+//         Cartarray: state.arrCart
+//     };
+// }
+
+export default connect(null, { addCart })(ProductDetail);
