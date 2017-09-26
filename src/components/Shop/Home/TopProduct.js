@@ -104,17 +104,3 @@ const styles = StyleSheet.create({
         color: '#662F90'
     }
 });
-/*<View style={body}>
-                    {this.props.topProducts.map(e => (
-                        <TouchableOpacity 
-                        style={productContainer} 
-                        onPress={() => this.gotoDetail(e)}
-                        key={e.id}
-                        >
-                            <Image source={{ uri: `${url}${e.images[0]}` }} style={productImage} />
-                            <Text style={produceName}>{e.name.toUpperCase()}</Text>
-                            <Text style={producePrice}>{e.price}$</Text>
-                        </TouchableOpacity>
-                    ))}
-                </View> 
-*/
