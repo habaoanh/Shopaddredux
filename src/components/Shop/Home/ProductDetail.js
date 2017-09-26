@@ -5,18 +5,29 @@ import {
 import { connect } from 'react-redux';
 import { addCart } from '../../redux/action';
 import saveCart from '../../../api/saveCart';
-//import global from '../global';
 
 const back = require('../../../media/appIcon/back.png');
 const cart = require('../../../media/appIcon/cartfull.png');
 
-const url = 'http:192.168.0.108/api/images/product/';
+const url = 'http:192.168.0.104/api/images/product/';
 
 class ProductDetail extends Component {
+    // componentWillReceiveProps() {
+    //     const { cartArray } = this.props;
+    //     saveCart(cartArray);
+    //     console.log('++++++++++++++');
+    //     console.log(cartArray);
+    //     console.log('++++++++++++++');
+    // }
 
     addProductToCart() {
+        const { cartArray } = this.props;
         const { product } = this.props.navigation.state.params;
-        this.props.addCart(product);
+        this.props.carArray = this.props.addCart(product);
+        saveCart(cartArray);
+        console.log('++++++++++++++');
+        console.log(cartArray);
+        console.log('++++++++++++++');
     }
     goBack() {
         const { navigation } = this.props;
