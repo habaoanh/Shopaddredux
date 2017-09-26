@@ -5,7 +5,7 @@ import { View, Text, Image, StyleSheet, Dimensions, TouchableOpacity } from 'rea
 import Swiper from 'react-native-swiper';
 
 const { width } = Dimensions.get('window');
-const url = 'http://192.168.0.112/api/images/type/';
+const url = 'http://192.168.0.108/api/images/type/';
 
 export default class Category extends Component {
     gotoListProduct() {

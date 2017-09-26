@@ -1,9 +1,12 @@
-export function addCart(product) {
-    return { type: 'ADD_PRODUCT', product };
+export function addCart(product, id) {
+    return { type: 'ADD_CART', product, id };
 }
-export function add(id) {
+export function Add(id) {
     return { type: 'ADD', id };
 }
-export function sub(id) {
+export function Sub(id) {
     return { type: 'SUB', id };
+}
+export function Remove(id) {
+    return { type: 'REMOVE', id };
 }

@@ -4,19 +4,20 @@ import {
     Dimensions, StyleSheet, Image
 } from 'react-native';
 import { connect } from 'react-redux';
-import global from '../global';
+//import global from '../global';
+import { Add, Sub, Remove } from '../../redux/action';
 
 
 function toTitleCase(str) {
     return str.replace(/\w\S*/g, txt => txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase());
 }
 
-const url = 'http:192.168.0.112/api/images/product/';
+const url = 'http:192.168.0.108/api/images/product/';
 
-class CartView extends Component {
-    incrQuatity(id) {
-        global.incrQuantity(id);
-    }
+class Cart extends Component {
+    // incrQuatity(id) {
+    //     global.incrQuantity(id);
+    // }
 
     gotoDetail() {
         const { navigate } = this.props.navigation;
@@ -33,7 +34,7 @@ class CartView extends Component {
                 <FlatList
                     contentContainerStyle={main}
                     data={cartArray}
-                    keyExtractor={item => item.id}
+                    keyExtractor={item => item.product.id}
                     //ItemSeparatorComponent={this.renderSeparator}
                     //ListHeaderComponent={this.renderHeader} 
                     //ListFooterComponent={this.renderFooter}
@@ -48,7 +49,9 @@ class CartView extends Component {
                                 style={{ justifyContent: 'space-between', flexDirection: 'row' }}
                                 >
                                     <Text style={txtName}>{toTitleCase(item.product.name)}</Text>
-                                    <TouchableOpacity>
+                                    <TouchableOpacity 
+                                    onPress={() => this.props.Remove(item.product.id)}
+                                    >
                                         <Text 
                                         style={{ fontFamily: 'Avenir', color: '#969696' }}
                                         >X</Text>
@@ -60,12 +63,14 @@ class CartView extends Component {
                                 <View style={productController}>
                                     <View style={numberOfProduct}>
                                         <TouchableOpacity 
-                                        onPress={() => this.incrQuatity(item.product.id)}
+                                        onPress={() => this.props.Add(item.product.id)}
                                         >
                                             <Text>+</Text>
                                         </TouchableOpacity>
                                         <Text>{item.quantity}</Text>
-                                        <TouchableOpacity>
+                                        <TouchableOpacity 
+                                        onPress={() => this.props.Sub(item.product.id)}
+                                        >
                                             <Text>-</Text>
                                         </TouchableOpacity>
                                     </View>
@@ -170,11 +175,11 @@ const styles = StyleSheet.create({
 
 function mapStateToProps(state) {
     return { 
-        Cartarray: state.arrCart
+        cartArray: state.cartArray
     };
 }
 
-export default connect(mapStateToProps)(CartView);
+export default connect(mapStateToProps, { Add, Sub, Remove })(Cart);
 
 
 /*<View style={product}>

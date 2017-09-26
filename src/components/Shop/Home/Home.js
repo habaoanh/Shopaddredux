@@ -6,7 +6,6 @@ import Category from './Category';
 import TopProduct from './TopProduct';
 import Header from './Header';
 import initData from '../../../api/initData';
-import saveCart from '../../../api/saveCart';
 import getCart from '../../../api/getCart';
 
 class Home extends Component {
@@ -16,22 +15,23 @@ class Home extends Component {
             types: [],
             topProducts: [],
         };
-        this.addProductToCart.bind(this);
+        //this.addProductToCart.bind(this);
     }
 
     componentDidMount() {
+        const { cartArray } = this.props;
         initData()
         .then(resJSON => {
             const { type, product } = resJSON;
             this.setState({ types: type, topProducts: product });
         });
-        getCart()
-        .then(cartArray => { this.props.cartArray = cartArray; });
+        getCart().then(cartArray);
     }
-    addProductToCart() {
-        // this.props.cartArray.concat({ product, quanlity: 1 })
-          saveCart(this.props.cartArray);
-    }
+    // addProductToCart() {
+    //     // this.props.cartArray.concat({ product, quanlity: 1 })
+    //     const { cartArray } = this.props;
+    //       saveCart(cartArray);
+    // }
 
     render() {
         const { types, topProducts } = this.state;
@@ -49,7 +49,7 @@ class Home extends Component {
 
 function mapStateToProps(state) {
     return { 
-        Cartarray: state.arrCart
+        cartArray: state.Cartarray
     };
 }
 

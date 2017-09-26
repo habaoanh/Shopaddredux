@@ -4,23 +4,19 @@ import {
 } from 'react-native';
 import { connect } from 'react-redux';
 import { addCart } from '../../redux/action';
+import saveCart from '../../../api/saveCart';
 //import global from '../global';
 
 const back = require('../../../media/appIcon/back.png');
 const cart = require('../../../media/appIcon/cartfull.png');
 
-const url = 'http:192.168.0.112/api/images/product/';
+const url = 'http:192.168.0.108/api/images/product/';
 
 class ProductDetail extends Component {
-    // addThisProductToCart(actionType) {
-    //     const { product } = this.props.navigation.state.product.params;
-    //     global.addProductToCart(product);
-    //     this.props.dispatch({ type: actionType });
-    // }
 
-    onAdd() {
+    addProductToCart() {
         const { product } = this.props.navigation.state.params;
-        this.props.addWord(product);
+        this.props.addCart(product);
     }
     goBack() {
         const { navigation } = this.props;
@@ -28,7 +24,6 @@ class ProductDetail extends Component {
     }
 
     render() {
-        //const { Cartarray } = this.props;
         const {
             wrapper, cardStyle, header,
             footer, backStyle,
@@ -46,7 +41,7 @@ class ProductDetail extends Component {
                         <TouchableOpacity onPress={this.goBack.bind(this)}>
                             <Image style={backStyle} source={back} />
                         </TouchableOpacity>
-                        <TouchableOpacity onPress={this.onAdd.bind(this)}>
+                        <TouchableOpacity onPress={this.addProductToCart.bind(this)}>
                             <Image style={cartStyle} source={cart} />
                         </TouchableOpacity>
                     </View>
@@ -208,10 +203,10 @@ const styles = StyleSheet.create({
         fontFamily: 'Avenir'
     }
 });
-// function mapStateToProps(state) {
-//     return { 
-//         Cartarray: state.arrCart
-//     };
-// }
+function mapStateToProps(state) {
+    return { 
+        cartArray: state.cartArray
+    };
+}
 
-export default connect(null, { addCart })(ProductDetail);
+export default connect(mapStateToProps, { addCart })(ProductDetail);
